@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Demo offline cho Camera AIM Digital Twin 3D vector JSON contract.">
+  <title>Camera AIM — 3D Vector Demo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%2338bdf8' d='M32 3 58 18v28L32 61 6 46V18z'/%3E%3Cpath fill='%23070b13' d='m32 12 17 10v20L32 52 15 42V22z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <p class="eyebrow">CAMERA AIM · OFFLINE HANDOFF</p>
+        <h1>Digital Twin 3D Vector Demo</h1>
+        <p class="subtitle">Phòng office_001 · 4,5 × 10 × 3 m · lưới 0,5 m</p>
+      </div>
+      <span id="provenance" class="badge">Đang tải…</span>
+    </header>
+
+    <section class="toolbar" aria-label="Điều khiển demo">
+      <button id="previous" type="button">← Frame trước</button>
+      <button id="play" type="button">Tạm dừng</button>
+      <button id="next" type="button">Frame sau →</button>
+      <label for="fixture">Dữ liệu</label>
+      <select id="fixture">
+        <option value="../examples/demo_multi_frame.json">Chuyển động nhiều frame</option>
+        <option value="../examples/demo_single_frame.json">Một frame</option>
+        <option value="../examples/demo_invalid_and_outside_hull.json">Reliability / invalid</option>
+      </select>
+      <output id="frameLabel">—</output>
+    </section>
+
+    <section class="workspace">
+      <div class="canvas-wrap">
+        <canvas id="scene" aria-label="Mô hình phòng 3D và vector người"></canvas>
+        <p class="legend"><span class="trusted"></span> trusted/simulated <span class="estimated"></span> estimated <span class="axis"></span> World origin</p>
+      </div>
+      <aside>
+        <h2>Vector trong frame</h2>
+        <div id="people"></div>
+        <h2>Không được đặt vào scene</h2>
+        <div id="invalid"></div>
+        <p class="notice">Demo này chỉ đọc JSON synthetic. Không có RTSP, YOLO, tài khoản Camera AIM hoặc kết nối backend.</p>
+      </aside>
+    </section>
+    <p id="error" role="alert" hidden></p>
+  </main>
+  <script type="module" src="./viewer.js"></script>
+</body>
+</html>

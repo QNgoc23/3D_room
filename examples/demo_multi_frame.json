@@ -1,0 +1,820 @@
+{
+  "schema_version": "camera_aim_3d_vectors_v1",
+  "provenance": {
+    "source": "DEMO_SYNTHETIC",
+    "synthetic": true,
+    "classification": "PUBLIC_DEMO",
+    "input_schema_version": null,
+    "contains_biometrics": false
+  },
+  "generated_at_utc": "2026-01-01T00:00:00Z",
+  "room": {
+    "id": "office_001",
+    "width_m": 4.5,
+    "length_m": 10.0,
+    "height_m": 3.0,
+    "grid_cell_m": 0.5,
+    "grid_cols": 9,
+    "grid_rows": 20,
+    "grid_total_cells": 180
+  },
+  "coordinate_system": {
+    "world": {
+      "name": "camera_aim_world",
+      "unit": "meter",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "x_positive": "left_to_right_looking_in",
+      "y_positive": "door_to_window",
+      "z_positive": "up",
+      "ground_z": 0.0
+    },
+    "scene": {
+      "name": "camera_aim_threejs_y_up",
+      "unit": "meter",
+      "mapping": {
+        "x": "world.x - room.width_m / 2",
+        "y": "world.z",
+        "z": "room.length_m / 2 - world.y"
+      }
+    }
+  },
+  "demo_kind": "multi_frame_animation",
+  "frames": [
+    {
+      "frame_id": "DEMO_FRAME_0001",
+      "capture_timestamp_s": 2000.0,
+      "people": [
+        {
+          "id": "DEMO-PERSON-ALPHA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 1.0,
+            "y": 2.0,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": -1.25,
+            "y": 0.0,
+            "z": 3.0
+          },
+          "grid_cell": {
+            "col": 2,
+            "row": 4,
+            "cell_id": "C2_R4",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -1.25,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "quality": "ok"
+            }
+          ]
+        },
+        {
+          "id": "DEMO-PERSON-BETA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 3.5,
+            "y": 7.5,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": 1.25,
+            "y": 0.0,
+            "z": -2.5
+          },
+          "grid_cell": {
+            "col": 7,
+            "row": 15,
+            "cell_id": "C7_R15",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 3.5,
+                "y": 7.5,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.25,
+                "y": 0.0,
+                "z": -2.5
+              },
+              "quality": "ok"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "frame_id": "DEMO_FRAME_0002",
+      "capture_timestamp_s": 2001.0,
+      "people": [
+        {
+          "id": "DEMO-PERSON-ALPHA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2001.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 1.35,
+            "y": 2.35,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": -0.9,
+            "y": 0.0,
+            "z": 2.65
+          },
+          "grid_cell": {
+            "col": 2,
+            "row": 4,
+            "cell_id": "C2_R4",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -1.25,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 1.35,
+                "y": 2.35,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.9,
+                "y": 0.0,
+                "z": 2.65
+              },
+              "quality": "ok"
+            }
+          ]
+        },
+        {
+          "id": "DEMO-PERSON-BETA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2001.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 3.3,
+            "y": 7.2,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": 1.05,
+            "y": 0.0,
+            "z": -2.2
+          },
+          "grid_cell": {
+            "col": 6,
+            "row": 14,
+            "cell_id": "C6_R14",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 3.5,
+                "y": 7.5,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.25,
+                "y": 0.0,
+                "z": -2.5
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 3.3,
+                "y": 7.2,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.05,
+                "y": 0.0,
+                "z": -2.2
+              },
+              "quality": "ok"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "frame_id": "DEMO_FRAME_0003",
+      "capture_timestamp_s": 2002.0,
+      "people": [
+        {
+          "id": "DEMO-PERSON-ALPHA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2002.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 1.7,
+            "y": 2.7,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": -0.55,
+            "y": 0.0,
+            "z": 2.3
+          },
+          "grid_cell": {
+            "col": 3,
+            "row": 5,
+            "cell_id": "C3_R5",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -1.25,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 1.35,
+                "y": 2.35,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.9,
+                "y": 0.0,
+                "z": 2.65
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2002.0,
+              "position_world_m": {
+                "x": 1.7,
+                "y": 2.7,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.55,
+                "y": 0.0,
+                "z": 2.3
+              },
+              "quality": "ok"
+            }
+          ]
+        },
+        {
+          "id": "DEMO-PERSON-BETA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2002.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 3.1,
+            "y": 6.9,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": 0.85,
+            "y": 0.0,
+            "z": -1.9
+          },
+          "grid_cell": {
+            "col": 6,
+            "row": 13,
+            "cell_id": "C6_R13",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 3.5,
+                "y": 7.5,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.25,
+                "y": 0.0,
+                "z": -2.5
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 3.3,
+                "y": 7.2,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.05,
+                "y": 0.0,
+                "z": -2.2
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2002.0,
+              "position_world_m": {
+                "x": 3.1,
+                "y": 6.9,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 0.85,
+                "y": 0.0,
+                "z": -1.9
+              },
+              "quality": "ok"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "frame_id": "DEMO_FRAME_0004",
+      "capture_timestamp_s": 2003.0,
+      "people": [
+        {
+          "id": "DEMO-PERSON-ALPHA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2003.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 2.05,
+            "y": 3.05,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": -0.2,
+            "y": 0.0,
+            "z": 1.95
+          },
+          "grid_cell": {
+            "col": 4,
+            "row": 6,
+            "cell_id": "C4_R6",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -1.25,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 1.35,
+                "y": 2.35,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.9,
+                "y": 0.0,
+                "z": 2.65
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2002.0,
+              "position_world_m": {
+                "x": 1.7,
+                "y": 2.7,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.55,
+                "y": 0.0,
+                "z": 2.3
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2003.0,
+              "position_world_m": {
+                "x": 2.05,
+                "y": 3.05,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.2,
+                "y": 0.0,
+                "z": 1.95
+              },
+              "quality": "ok"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "frame_id": "DEMO_FRAME_0005",
+      "capture_timestamp_s": 2004.0,
+      "people": [
+        {
+          "id": "DEMO-PERSON-ALPHA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2004.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 2.4,
+            "y": 3.4,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": 0.15,
+            "y": 0.0,
+            "z": 1.6
+          },
+          "grid_cell": {
+            "col": 4,
+            "row": 6,
+            "cell_id": "C4_R6",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -1.25,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 1.35,
+                "y": 2.35,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.9,
+                "y": 0.0,
+                "z": 2.65
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2002.0,
+              "position_world_m": {
+                "x": 1.7,
+                "y": 2.7,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.55,
+                "y": 0.0,
+                "z": 2.3
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2003.0,
+              "position_world_m": {
+                "x": 2.05,
+                "y": 3.05,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": -0.2,
+                "y": 0.0,
+                "z": 1.95
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2004.0,
+              "position_world_m": {
+                "x": 2.4,
+                "y": 3.4,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 0.15,
+                "y": 0.0,
+                "z": 1.6
+              },
+              "quality": "ok"
+            }
+          ]
+        },
+        {
+          "id": "DEMO-PERSON-BETA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 2004.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 2.7,
+            "y": 6.3,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": 0.45,
+            "y": 0.0,
+            "z": -1.3
+          },
+          "grid_cell": {
+            "col": 5,
+            "row": 12,
+            "cell_id": "C5_R12",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": [
+            {
+              "capture_timestamp_s": 2000.0,
+              "position_world_m": {
+                "x": 3.5,
+                "y": 7.5,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.25,
+                "y": 0.0,
+                "z": -2.5
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2001.0,
+              "position_world_m": {
+                "x": 3.3,
+                "y": 7.2,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 1.05,
+                "y": 0.0,
+                "z": -2.2
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2002.0,
+              "position_world_m": {
+                "x": 3.1,
+                "y": 6.9,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 0.85,
+                "y": 0.0,
+                "z": -1.9
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2003.0,
+              "position_world_m": {
+                "x": 2.9,
+                "y": 6.6,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 0.65,
+                "y": 0.0,
+                "z": -1.6
+              },
+              "quality": "ok"
+            },
+            {
+              "capture_timestamp_s": 2004.0,
+              "position_world_m": {
+                "x": 2.7,
+                "y": 6.3,
+                "z": 0.0
+              },
+              "position_scene_m": {
+                "x": 0.45,
+                "y": 0.0,
+                "z": -1.3
+              },
+              "quality": "ok"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

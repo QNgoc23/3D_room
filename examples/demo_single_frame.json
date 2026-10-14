@@ -1,0 +1,95 @@
+{
+  "schema_version": "camera_aim_3d_vectors_v1",
+  "provenance": {
+    "source": "DEMO_SYNTHETIC",
+    "synthetic": true,
+    "classification": "PUBLIC_DEMO",
+    "input_schema_version": null,
+    "contains_biometrics": false
+  },
+  "generated_at_utc": "2026-01-01T00:00:00Z",
+  "room": {
+    "id": "office_001",
+    "width_m": 4.5,
+    "length_m": 10.0,
+    "height_m": 3.0,
+    "grid_cell_m": 0.5,
+    "grid_cols": 9,
+    "grid_rows": 20,
+    "grid_total_cells": 180
+  },
+  "coordinate_system": {
+    "world": {
+      "name": "camera_aim_world",
+      "unit": "meter",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "x_positive": "left_to_right_looking_in",
+      "y_positive": "door_to_window",
+      "z_positive": "up",
+      "ground_z": 0.0
+    },
+    "scene": {
+      "name": "camera_aim_threejs_y_up",
+      "unit": "meter",
+      "mapping": {
+        "x": "world.x - room.width_m / 2",
+        "y": "world.z",
+        "z": "room.length_m / 2 - world.y"
+      }
+    }
+  },
+  "demo_kind": "single_frame",
+  "frames": [
+    {
+      "frame_id": "DEMO_FRAME_0001",
+      "capture_timestamp_s": 1000.0,
+      "people": [
+        {
+          "id": "DEMO-PERSON-ALPHA",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 1000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 1.5,
+            "y": 3.0,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": -0.75,
+            "y": 0.0,
+            "z": 2.0
+          },
+          "grid_cell": {
+            "col": 3,
+            "row": 6,
+            "cell_id": "C3_R6",
+            "cell_size_m": 0.5
+          },
+          "position_status": "simulated",
+          "position_reason": "simulated",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "simulated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": []
+        }
+      ]
+    }
+  ]
+}

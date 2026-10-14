@@ -1,0 +1,207 @@
+{
+  "schema_version": "camera_aim_3d_vectors_v1",
+  "provenance": {
+    "source": "DEMO_SYNTHETIC",
+    "synthetic": true,
+    "classification": "PUBLIC_DEMO",
+    "input_schema_version": null,
+    "contains_biometrics": false
+  },
+  "generated_at_utc": "2026-01-01T00:00:00Z",
+  "room": {
+    "id": "office_001",
+    "width_m": 4.5,
+    "length_m": 10.0,
+    "height_m": 3.0,
+    "grid_cell_m": 0.5,
+    "grid_cols": 9,
+    "grid_rows": 20,
+    "grid_total_cells": 180
+  },
+  "coordinate_system": {
+    "world": {
+      "name": "camera_aim_world",
+      "unit": "meter",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "x_positive": "left_to_right_looking_in",
+      "y_positive": "door_to_window",
+      "z_positive": "up",
+      "ground_z": 0.0
+    },
+    "scene": {
+      "name": "camera_aim_threejs_y_up",
+      "unit": "meter",
+      "mapping": {
+        "x": "world.x - room.width_m / 2",
+        "y": "world.z",
+        "z": "room.length_m / 2 - world.y"
+      }
+    }
+  },
+  "demo_kind": "invalid_and_outside_hull",
+  "frames": [
+    {
+      "frame_id": "DEMO_FRAME_INVALID",
+      "capture_timestamp_s": 3000.0,
+      "people": [
+        {
+          "id": "DEMO-OUTSIDE-HULL",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "SIMULATED",
+          "visible": true,
+          "capture_timestamp_s": 3000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": {
+            "x": 3.9,
+            "y": 8.6,
+            "z": 0.0
+          },
+          "position_scene_m": {
+            "x": 1.65,
+            "y": 0.0,
+            "z": -3.6
+          },
+          "grid_cell": {
+            "col": 7,
+            "row": 17,
+            "cell_id": "C7_R17",
+            "cell_size_m": 0.5
+          },
+          "position_status": "estimated",
+          "position_reason": "outside_calibration_hull",
+          "quality": "ok",
+          "metric_valid": true,
+          "footpoint_valid": true,
+          "trust_level": "estimated",
+          "renderable": true,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": []
+        },
+        {
+          "id": "DEMO-NO-FOOTPOINT",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "UNKNOWN",
+          "visible": true,
+          "capture_timestamp_s": 3000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": null,
+          "position_scene_m": null,
+          "grid_cell": null,
+          "position_status": "invalid",
+          "position_reason": "no_footpoint",
+          "quality": "invalid",
+          "metric_valid": false,
+          "footpoint_valid": false,
+          "trust_level": "untrusted",
+          "renderable": false,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": []
+        },
+        {
+          "id": "DEMO-STALE",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "UNKNOWN",
+          "visible": false,
+          "capture_timestamp_s": 2980.0,
+          "last_seen_ago_s": 20.0,
+          "position_world_m": null,
+          "position_scene_m": null,
+          "grid_cell": null,
+          "position_status": "stale",
+          "position_reason": "stale_track",
+          "quality": "unknown",
+          "metric_valid": false,
+          "footpoint_valid": null,
+          "trust_level": "untrusted",
+          "renderable": false,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": []
+        },
+        {
+          "id": "DEMO-NO-WORLD-XY",
+          "camera_sources": [
+            "A"
+          ],
+          "tracking_state": "UNKNOWN",
+          "visible": true,
+          "capture_timestamp_s": 3000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": null,
+          "position_scene_m": null,
+          "grid_cell": null,
+          "position_status": "unavailable",
+          "position_reason": "missing_world_xy",
+          "quality": "unknown",
+          "metric_valid": false,
+          "footpoint_valid": null,
+          "trust_level": "untrusted",
+          "renderable": false,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": []
+        },
+        {
+          "id": "DEMO-CAMERA-B-DOOR",
+          "camera_sources": [
+            "B"
+          ],
+          "tracking_state": "UNKNOWN",
+          "visible": false,
+          "capture_timestamp_s": 3000.0,
+          "last_seen_ago_s": 0.0,
+          "position_world_m": null,
+          "position_scene_m": null,
+          "grid_cell": null,
+          "position_status": "door_only",
+          "position_reason": "camera_b_door_only",
+          "quality": "unknown",
+          "metric_valid": false,
+          "footpoint_valid": null,
+          "trust_level": "untrusted",
+          "renderable": false,
+          "motion": {
+            "available": false,
+            "velocity_world_mps": null,
+            "speed_mps": null,
+            "heading_rad": null,
+            "reason": "demo_no_measured_motion"
+          },
+          "trajectory": []
+        }
+      ]
+    }
+  ]
+}

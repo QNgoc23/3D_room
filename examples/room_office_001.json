@@ -1,0 +1,27 @@
+{
+  "schema_version": "camera_aim_room_v1",
+  "room": {
+    "id": "office_001",
+    "width_m": 4.5,
+    "length_m": 10.0,
+    "height_m": 3.0,
+    "grid_cell_m": 0.5,
+    "grid_cols": 9,
+    "grid_rows": 20,
+    "grid_total_cells": 180
+  },
+  "world_coordinate_system": {
+    "unit": "meter",
+    "origin": [0.0, 0.0, 0.0],
+    "origin_anchor": "left_door_jamb_floor_intersection_looking_in",
+    "x_positive": "left_to_right_looking_in",
+    "y_positive": "door_to_window",
+    "z_positive": "up",
+    "ground_z": 0.0
+  },
+  "camera_roles": {
+    "A": "canonical_spatial_tracking",
+    "B": "door_only_no_world_xy"
+  },
+  "notice": "Public integration metadata only. This is not a calibration artifact and contains no homography or camera credentials."
+}

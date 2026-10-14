@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ONgoc23/3D_room/schemas/camera_aim_3d_vectors_v1.schema.json",
+  "title": "Camera AIM 3D Vector Export v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "provenance", "generated_at_utc", "room", "coordinate_system", "frames"],
+  "properties": {
+    "schema_version": { "const": "camera_aim_3d_vectors_v1" },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "generated_at_utc": { "type": "string", "format": "date-time" },
+    "demo_kind": { "type": "string" },
+    "room": { "$ref": "#/$defs/room" },
+    "coordinate_system": { "$ref": "#/$defs/coordinateSystem" },
+    "frames": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/frame" }
+    }
+  },
+  "$defs": {
+    "nullableNumber": { "type": ["number", "null"] },
+    "vector3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+      }
+    },
+    "nullableVector3": {
+      "oneOf": [
+        { "$ref": "#/$defs/vector3" },
+        { "type": "null" }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "synthetic", "classification", "input_schema_version", "contains_biometrics"],
+      "properties": {
+        "source": { "enum": ["DEMO_SYNTHETIC", "CAMERA_AIM_TWIN_SNAPSHOT"] },
+        "synthetic": { "type": "boolean" },
+        "classification": { "enum": ["PUBLIC_DEMO", "SANITIZED_EXPORT"] },
+        "input_schema_version": { "type": ["integer", "string", "null"] },
+        "contains_biometrics": { "const": false }
+      }
+    },
+    "room": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "width_m", "length_m", "height_m", "grid_cell_m", "grid_cols", "grid_rows", "grid_total_cells"],
+      "properties": {
+        "id": { "const": "office_001" },
+        "width_m": { "const": 4.5 },
+        "length_m": { "const": 10.0 },
+        "height_m": { "const": 3.0 },
+        "grid_cell_m": { "const": 0.5 },
+        "grid_cols": { "const": 9 },
+        "grid_rows": { "const": 20 },
+        "grid_total_cells": { "const": 180 }
+      }
+    },
+    "coordinateSystem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["world", "scene"],
+      "properties": {
+        "world": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "unit", "origin", "x_positive", "y_positive", "z_positive", "ground_z"],
+          "properties": {
+            "name": { "const": "camera_aim_world" },
+            "unit": { "const": "meter" },
+            "origin": {
+              "type": "array",
+              "prefixItems": [{ "const": 0.0 }, { "const": 0.0 }, { "const": 0.0 }],
+              "items": false
+            },
+            "x_positive": { "const": "left_to_right_looking_in" },
+            "y_positive": { "const": "door_to_window" },
+            "z_positive": { "const": "up" },
+            "ground_z": { "const": 0.0 }
+          }
+        },
+        "scene": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "unit", "mapping"],
+          "properties": {
+            "name": { "const": "camera_aim_threejs_y_up" },
+            "unit": { "const": "meter" },
+            "mapping": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["x", "y", "z"],
+              "properties": {
+                "x": { "const": "world.x - room.width_m / 2" },
+                "y": { "const": "world.z" },
+                "z": { "const": "room.length_m / 2 - world.y" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "gridCell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["col", "row", "cell_id", "cell_size_m"],
+      "properties": {
+        "col": { "type": "integer", "minimum": 0, "maximum": 8 },
+        "row": { "type": "integer", "minimum": 0, "maximum": 19 },
+        "cell_id": { "type": "string", "pattern": "^C[0-8]_R(?:[0-9]|1[0-9])$" },
+        "cell_size_m": { "const": 0.5 }
+      }
+    },
+    "nullableGridCell": {
+      "oneOf": [
+        { "$ref": "#/$defs/gridCell" },
+        { "type": "null" }
+      ]
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "velocity_world_mps", "speed_mps", "heading_rad", "reason"],
+      "properties": {
+        "available": { "type": "boolean" },
+        "velocity_world_mps": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["x", "y"],
+              "properties": { "x": { "type": "number" }, "y": { "type": "number" } }
+            },
+            { "type": "null" }
+          ]
+        },
+        "speed_mps": { "$ref": "#/$defs/nullableNumber" },
+        "heading_rad": { "$ref": "#/$defs/nullableNumber" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "trajectoryPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capture_timestamp_s", "position_world_m", "position_scene_m", "quality"],
+      "properties": {
+        "capture_timestamp_s": { "type": "number" },
+        "position_world_m": { "$ref": "#/$defs/vector3" },
+        "position_scene_m": { "$ref": "#/$defs/vector3" },
+        "quality": { "const": "ok" }
+      }
+    },
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "camera_sources", "tracking_state", "visible", "capture_timestamp_s", "last_seen_ago_s",
+        "position_world_m", "position_scene_m", "grid_cell", "position_status", "position_reason", "quality",
+        "metric_valid", "footpoint_valid", "trust_level", "renderable", "motion", "trajectory"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "camera_sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["A", "B"] }
+        },
+        "tracking_state": { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "capture_timestamp_s": { "$ref": "#/$defs/nullableNumber" },
+        "last_seen_ago_s": { "$ref": "#/$defs/nullableNumber" },
+        "position_world_m": { "$ref": "#/$defs/nullableVector3" },
+        "position_scene_m": { "$ref": "#/$defs/nullableVector3" },
+        "grid_cell": { "$ref": "#/$defs/nullableGridCell" },
+        "position_status": { "enum": ["measured", "estimated", "simulated", "invalid", "stale", "unavailable", "door_only"] },
+        "position_reason": { "enum": ["ok", "simulated", "outside_calibration_hull", "outside_valid_region", "invalid_position", "no_footpoint", "stale_track", "missing_world_xy", "unknown_quality", "outside_room", "metric_invalid", "camera_b_door_only"] },
+        "quality": { "enum": ["ok", "clamped", "invalid", "unknown"] },
+        "metric_valid": { "type": "boolean" },
+        "footpoint_valid": { "type": ["boolean", "null"] },
+        "trust_level": { "enum": ["trusted", "estimated", "simulated", "untrusted"] },
+        "renderable": { "type": "boolean" },
+        "motion": { "$ref": "#/$defs/motion" },
+        "trajectory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/trajectoryPoint" }
+        }
+      }
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame_id", "capture_timestamp_s", "people"],
+      "properties": {
+        "frame_id": { "type": "string", "minLength": 1 },
+        "capture_timestamp_s": { "$ref": "#/$defs/nullableNumber" },
+        "people": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/person" }
+        }
+      }
+    }
+  }
+}

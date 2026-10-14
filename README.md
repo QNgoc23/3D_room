@@ -16,7 +16,7 @@ Gói bàn giao độc lập để team 3D đọc vector người từ Camera AIM
 ## Chạy nhanh trên Windows
 
 ```powershell
-git clone https://github.com/ONgoc23/3D_room.git
+git clone https://github.com/QNgoc23/3D_room.git
 cd 3D_room
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt

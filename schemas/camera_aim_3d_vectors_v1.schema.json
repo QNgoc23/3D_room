@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ONgoc23/3D_room/schemas/camera_aim_3d_vectors_v1.schema.json",
+  "$id": "https://github.com/QNgoc23/3D_room/schemas/camera_aim_3d_vectors_v1.schema.json",
   "title": "Camera AIM 3D Vector Export v1",
   "type": "object",
   "additionalProperties": false,

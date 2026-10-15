@@ -90,6 +90,11 @@ def semantic_errors(payload: dict[str, Any]) -> list[str]:
                 errors.append(f"{path}: Camera B door-only must never publish World XY")
             if person.get("trust_level") == "trusted" and person.get("position_status") != "measured":
                 errors.append(f"{path}: only measured positions may be trusted")
+            calibration_status = provenance.get("calibration_status")
+            if calibration_status == "invalid" and renderable:
+                errors.append(f"{path}: invalid calibration cannot publish a renderable position")
+            if calibration_status == "degraded" and person.get("trust_level") == "trusted":
+                errors.append(f"{path}: degraded calibration caps trust at estimated")
             timestamps = [point.get("capture_timestamp_s") for point in person.get("trajectory", [])]
             if timestamps != sorted(timestamps):
                 errors.append(f"{path}: trajectory capture timestamps must be monotonic")

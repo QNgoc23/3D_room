@@ -67,3 +67,20 @@ Transport live không thuộc gói này. Khi triển khai:
 3. Mỗi payload phải qua JSON Schema + semantic validator.
 4. Renderer chỉ dùng `renderable=true`.
 5. Không log raw snapshot chứa dữ liệu định danh.
+
+## Tối ưu tọa độ Camera A → World (reference, chưa nằm trong contract v1)
+
+`tools/geometry.py`, `tools/smoothing.py` và `tools/calibrate_homography.py` là bản tham chiếu cho phía Camera AIM backend (stdlib, không có dữ liệu calibration thật):
+
+1. **Undistort footpoint trước homography** (`undistort_pixel`, model OpenCV `k1,k2,p1,p2,k3`). Homography chỉ đúng với camera pinhole; trên camera synthetic, held-out RMSE giảm từ ~8 cm xuống ~1 cm.
+2. **Fit H bằng DLT chuẩn hóa Hartley** với ≥ 6 điểm phân bố đều sàn, và đánh giá bằng **leave-one-out RMSE** thay vì RMSE trên chính điểm fit.
+3. **Uncertainty từng điểm**: `world_covariance` truyền nhiễu pixel (`σu≈2px`, `σv≈4px` cho cạnh đáy bbox) qua Jacobian của H. Vùng xa camera có bán kính 95 % lớn hơn nhiều; nên đặt ngưỡng `trusted` theo bán kính này thay vì chỉ theo hull.
+4. **Calibration hull tính từ điểm calibration** (`convex_hull`, `inside_hull`) để sinh `inside_calibration_hull` thay vì gán tay.
+5. **Kalman constant-velocity theo từng `gid`** (`MultiTrackSmoother`): dùng covariance ở bước 3 làm nhiễu đo, gate outlier bằng Mahalanobis, reset khi gap > 5 s / jump > 2 m / timestamp đảo chiều (đúng quy tắc trajectory). Cho velocity đo được để bật `motion_available` khi `motion_converged=true`.
+
+```powershell
+.\.venv\Scripts\python.exe tools\calibrate_homography.py --demo
+.\.venv\Scripts\python.exe tools\calibrate_homography.py private\camera_a_points.json --output private\camera_a_report.json
+```
+
+Muốn xuất `position_uncertainty_m` hoặc vị trí đã lọc ra JSON thì phải thêm field optional vào schema (thay đổi backward-compatible v1).

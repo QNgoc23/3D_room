@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 import math
 from typing import Any, Iterable, Mapping
 
+from rules import RULE_SET_VERSION, CalibrationProfile, Observation, evaluate
+
 
 SCHEMA_VERSION = "camera_aim_3d_vectors_v1"
 ROOM_ID = "office_001"
@@ -20,7 +22,6 @@ ROOM_HEIGHT_M = 3.0
 GRID_CELL_M = 0.5
 GRID_COLS = 9
 GRID_ROWS = 20
-STALE_AFTER_S = 15.0
 
 
 def _finite(value: Any) -> bool:
@@ -114,16 +115,6 @@ def _person_id(raw_gid: Any) -> str:
     return text if text.upper().startswith("G") else f"G{text}"
 
 
-def _is_stale(person: Mapping[str, Any]) -> bool:
-    if person.get("visible") is False:
-        return True
-    state = str(person.get("tracking_state") or "").upper()
-    if state and state not in {"ACTIVE", "TRACKED"}:
-        return True
-    age = _number_or_none(person.get("last_seen_ago_s"))
-    return age is not None and age > STALE_AFTER_S
-
-
 def _point(value: Any) -> dict[str, float] | None:
     if not isinstance(value, Mapping):
         return None
@@ -139,34 +130,28 @@ def _quality(value: Any) -> str:
     return text if text in {"ok", "clamped", "invalid", "unknown"} else "unknown"
 
 
-def _status(
-    person: Mapping[str, Any], room_metric_valid: bool, cameras: list[str], position: dict[str, float] | None,
-) -> tuple[str, str, str, bool, bool | None]:
-    b_only = "B" in cameras and "A" not in cameras
-    if b_only:
-        return "door_only", "camera_b_door_only", "untrusted", False, None
-    if _is_stale(person):
-        return "stale", "stale_track", "untrusted", False, None
-    quality = _quality(person.get("position_quality"))
-    reason = str(person.get("position_reason") or "").lower()
-    if not room_metric_valid:
-        return "invalid", "metric_invalid", "untrusted", False, None
-    if quality in {"clamped"} or reason == "outside_valid_region":
-        return "invalid", "outside_valid_region", "untrusted", False, True
-    if quality == "invalid":
-        return "invalid", "no_footpoint" if reason == "no_footpoint" or position is None else "invalid_position", "untrusted", False, False if position is None else None
-    if position is None:
-        return "unavailable", "missing_world_xy", "untrusted", False, None
-    if quality != "ok":
-        return "unavailable", "unknown_quality", "untrusted", False, None
-    if person.get("metric_valid") is not True:
-        return "invalid", "metric_invalid", "untrusted", False, True
-    if world_to_grid(position["x"], position["y"]) is None or position["z"] != 0.0:
-        return "invalid", "outside_room", "untrusted", False, True
-    outside_hull = person.get("extrapolation_warning") is True or person.get("inside_calibration_hull") is False
-    if outside_hull:
-        return "estimated", "outside_calibration_hull", "estimated", True, True
-    return "measured", "ok", "trusted", True, True
+def _observation(
+    person: Mapping[str, Any], room_metric_valid: bool, cameras: list[str],
+    position: dict[str, float] | None, frame_ts: float | None,
+) -> Observation:
+    visible = person.get("visible")
+    hull_flag = person.get("inside_calibration_hull")
+    extrapolation = person.get("extrapolation_warning")
+    return Observation(
+        cameras=tuple(cameras),
+        position=position,
+        quality=_quality(person.get("position_quality")),
+        reason=str(person.get("position_reason") or "").lower(),
+        metric_valid=person.get("metric_valid") if isinstance(person.get("metric_valid"), bool) else None,
+        room_metric_valid=room_metric_valid,
+        visible=visible if isinstance(visible, bool) else None,
+        tracking_state=str(person.get("tracking_state") or "").upper(),
+        last_seen_ago_s=_number_or_none(person.get("last_seen_ago_s")),
+        capture_ts=_number_or_none(person.get("ts_capture")),
+        frame_ts=frame_ts,
+        inside_hull_flag=hull_flag if isinstance(hull_flag, bool) else None,
+        extrapolation_warning=extrapolation if isinstance(extrapolation, bool) else None,
+    )
 
 
 def _trajectory_points(raw: Any) -> list[dict[str, Any]]:
@@ -234,11 +219,14 @@ def _motion(person: Mapping[str, Any], renderable: bool) -> dict[str, Any]:
 
 def _adapt_person(
     person: Mapping[str, Any], trajectories: Mapping[str, Any], frame_ts: float | None, room_metric_valid: bool,
+    calibration: CalibrationProfile | None = None,
 ) -> dict[str, Any]:
     person_id = _person_id(person.get("gid"))
     cameras = _camera_sources(person)
     position = _point(person.get("position_m"))
-    status, reason, trust, renderable, footpoint_valid = _status(person, room_metric_valid, cameras, position)
+    decision, _trace = evaluate(_observation(person, room_metric_valid, cameras, position, frame_ts), calibration)
+    status, reason, trust = decision.status, decision.reason, decision.trust
+    renderable, footpoint_valid = decision.renderable, decision.footpoint_valid
     if not renderable:
         position = None
     scene = world_to_scene(position["x"], position["y"], position["z"]) if position else None
@@ -286,8 +274,14 @@ def _validate_source_room(room: Mapping[str, Any]) -> None:
         raise ValueError(f"source ceiling {ceiling} does not match office_001 {ROOM_HEIGHT_M}")
 
 
-def adapt_twin_snapshot(payload: Mapping[str, Any]) -> dict[str, Any]:
-    """Convert a TwinLatest envelope or bare DigitalTwin snapshot."""
+def adapt_twin_snapshot(
+    payload: Mapping[str, Any], calibration: CalibrationProfile | None = None,
+) -> dict[str, Any]:
+    """Convert a TwinLatest envelope or bare DigitalTwin snapshot.
+
+    With a checked ``calibration`` profile the rule base also applies hull,
+    uncertainty and calibration-quality rules and records its fingerprint.
+    """
     twin_value = payload.get("twin") if isinstance(payload.get("twin"), Mapping) else payload
     if not isinstance(twin_value, Mapping):
         raise ValueError("input must be a TwinLatest envelope or DigitalTwin object")
@@ -306,16 +300,27 @@ def adapt_twin_snapshot(payload: Mapping[str, Any]) -> dict[str, Any]:
     if frame_ts is None:
         frame_ts = _number_or_none(twin.get("generated_at"))
     room_metric_valid = room.get("metric_positions_valid") is True
-    vectors = [_adapt_person(item, trajectories, frame_ts, room_metric_valid) for item in people if isinstance(item, Mapping)]
+    vectors = [
+        _adapt_person(item, trajectories, frame_ts, room_metric_valid, calibration)
+        for item in people if isinstance(item, Mapping)
+    ]
+    provenance: dict[str, Any] = {
+        "source": "CAMERA_AIM_TWIN_SNAPSHOT",
+        "synthetic": False,
+        "classification": "SANITIZED_EXPORT",
+        "input_schema_version": twin.get("schema_version"),
+        "contains_biometrics": False,
+    }
+    if calibration is not None:
+        provenance.update({
+            "rule_set_version": RULE_SET_VERSION,
+            "calibration_id": calibration.calibration_id,
+            "calibration_fingerprint": calibration.fingerprint,
+            "calibration_status": calibration.status,
+        })
     return {
         "schema_version": SCHEMA_VERSION,
-        "provenance": {
-            "source": "CAMERA_AIM_TWIN_SNAPSHOT",
-            "synthetic": False,
-            "classification": "SANITIZED_EXPORT",
-            "input_schema_version": twin.get("schema_version"),
-            "contains_biometrics": False,
-        },
+        "provenance": provenance,
         "generated_at_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "room": room_metadata(),
         "coordinate_system": coordinate_metadata(),

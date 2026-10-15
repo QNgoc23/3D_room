@@ -41,6 +41,10 @@
       "additionalProperties": false,
       "required": ["source", "synthetic", "classification", "input_schema_version", "contains_biometrics"],
       "properties": {
+        "rule_set_version": { "type": "string", "minLength": 1 },
+        "calibration_id": { "type": "string", "minLength": 1 },
+        "calibration_fingerprint": { "type": "string", "pattern": "^sha256:[0-9a-f]{16}$" },
+        "calibration_status": { "enum": ["valid", "degraded", "invalid"] },
         "source": { "enum": ["DEMO_SYNTHETIC", "CAMERA_AIM_TWIN_SNAPSHOT"] },
         "synthetic": { "type": "boolean" },
         "classification": { "enum": ["PUBLIC_DEMO", "SANITIZED_EXPORT"] },
